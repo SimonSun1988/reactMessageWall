@@ -50,7 +50,7 @@
 	var React = __webpack_require__(1);
 
 	var Home = __webpack_require__(157);
-	React.render(React.createElement(Home, null), document.getElementById('container'));
+	React.render(React.createElement(Home, null), document.body);
 
 
 /***/ },
@@ -20436,15 +20436,107 @@
 
 	var React = __webpack_require__(1);
 
+	var Header = __webpack_require__(158);
+	var Footer = __webpack_require__(159);
+	var Container = __webpack_require__(160);
+
+
 	var homePage = React.createClass({displayName: "homePage",
 	    render: function (){
 	        return (
-	            React.createElement("div", null, "This is React")
+	            React.createElement("div", null, 
+	                React.createElement(Header, null), 
+	                React.createElement(Container, null), 
+	                React.createElement(Footer, null)
+	            )
 	        );
 	    }
 	});
 
 	module.exports = homePage;
+
+/***/ },
+/* 158 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM *//** @jsx React.DOM */
+
+	var React = __webpack_require__(1);
+
+	var Header = React.createClass({displayName: "Header",
+
+	    render: function (){
+	        return (
+	            React.createElement("header", null, 
+	                React.createElement("nav", {className: "navbar navbar-default navbar-fixed-top"}, 
+	                    React.createElement("div", {className: "container-fluid"}, 
+	                        React.createElement("div", {className: "navbar-header"}, 
+	                            React.createElement("button", {type: "button", className: "navbar-toggle collapsed", "data-toggle": "collapse", "data-target": "#bs-example-navbar-collapse-6", "aria-expanded": "false"}, 
+	                                React.createElement("span", {className: "sr-only"}, "Toggle navigation"), 
+	                                React.createElement("span", {className: "icon-bar"}), 
+	                                React.createElement("span", {className: "icon-bar"}), 
+	                                React.createElement("span", {className: "icon-bar"})
+	                            ), 
+	                            React.createElement("a", {className: "navbar-brand", href: "#"}, "Brand")
+	                        ), 
+
+	                        React.createElement("div", {className: "navbar-collapse collapse", id: "bs-example-navbar-collapse-6", "aria-expanded": "false"}, 
+	                            React.createElement("ul", {className: "nav navbar-nav"}, 
+	                                React.createElement("li", {className: "active"}, React.createElement("a", {href: "#"}, "Home")), 
+	                                React.createElement("li", null, React.createElement("a", {href: "#"}, "Link")), 
+	                                React.createElement("li", null, React.createElement("a", {href: "#"}, "Link"))
+	                            )
+	                        )
+	                    )
+	                )
+	            )
+	        );
+	    }
+
+	});
+
+	module.exports = Header;
+
+/***/ },
+/* 159 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM *//** @jsx React.DOM */
+
+	var React = __webpack_require__(1);
+
+	var Footer = React.createClass({displayName: "Footer",
+
+	    render: function (){
+	        return (
+	            React.createElement("footer", null, "This is Footer")
+	        );
+	    }
+
+	});
+
+	module.exports = Footer;
+
+/***/ },
+/* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM *//** @jsx React.DOM */
+
+	var React = __webpack_require__(1);
+
+	var Container = React.createClass({displayName: "Container",
+
+	    render: function (){
+	        return (
+	            React.createElement("div", {id: "container", className: "container"}
+	            )
+	        );
+	    }
+
+	});
+
+	module.exports = Container;
 
 /***/ }
 /******/ ]);
