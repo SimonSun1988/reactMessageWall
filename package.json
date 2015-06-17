@@ -1,0 +1,28 @@
+{
+  "name": "React",
+  "version": "0.0.1",
+  "description": "react",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm install && ./node_modules/webpack/bin/webpack.js && node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SimonSun1988/reactMessageWall.git"
+  },
+  "author": "Simon Sun",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SimonSun1988/reactMessageWall/issues"
+  },
+  "homepage": "https://github.com/SimonSun1988/reactMessageWall#readme",
+  "dependencies": {
+    "babel": "^5.5.8",
+    "express": "^4.12.4",
+    "jade": "^1.11.0",
+    "jsx-loader": "^0.13.2",
+    "node-libs-browser": "^0.5.2",
+    "webpack": "^1.9.11"
+  }
+}
