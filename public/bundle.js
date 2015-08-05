@@ -20444,7 +20444,7 @@
 	var homePage = React.createClass({displayName: "homePage",
 	    render: function (){
 	        return (
-	            React.createElement("div", null, 
+	            React.createElement("div", {className: "Container"}, 
 	                React.createElement(Header, null), 
 	                React.createElement(Container, null), 
 	                React.createElement(Footer, null)
@@ -20468,26 +20468,14 @@
 	    render: function (){
 	        return (
 	            React.createElement("header", null, 
-	                React.createElement("nav", {className: "navbar navbar-default navbar-fixed-top"}, 
-	                    React.createElement("div", {className: "container-fluid"}, 
-	                        React.createElement("div", {className: "navbar-header"}, 
-	                            React.createElement("button", {type: "button", className: "navbar-toggle collapsed", "data-toggle": "collapse", "data-target": "#bs-example-navbar-collapse-6", "aria-expanded": "false"}, 
-	                                React.createElement("span", {className: "sr-only"}, "Toggle navigation"), 
-	                                React.createElement("span", {className: "icon-bar"}), 
-	                                React.createElement("span", {className: "icon-bar"}), 
-	                                React.createElement("span", {className: "icon-bar"})
-	                            ), 
-	                            React.createElement("a", {className: "navbar-brand", href: "#"}, "Brand")
-	                        ), 
-
-	                        React.createElement("div", {className: "navbar-collapse collapse", id: "bs-example-navbar-collapse-6", "aria-expanded": "false"}, 
-	                            React.createElement("ul", {className: "nav navbar-nav"}, 
-	                                React.createElement("li", {className: "active"}, React.createElement("a", {href: "#"}, "Home")), 
-	                                React.createElement("li", null, React.createElement("a", {href: "#"}, "Link")), 
-	                                React.createElement("li", null, React.createElement("a", {href: "#"}, "Link"))
-	                            )
-	                        )
+	                React.createElement("nav", null, 
+	                  React.createElement("div", {className: "nav-wrapper"}, 
+	                    React.createElement("div", {className: "col s12"}, 
+	                      React.createElement("a", {className: "brand-logo"}, "Logo"), 
+	                      React.createElement("ul", {className: "right hide-on-med-and-down"}
+	                      )
 	                    )
+	                  )
 	                )
 	            )
 	        );
@@ -20509,7 +20497,21 @@
 
 	    render: function (){
 	        return (
-	            React.createElement("footer", null, "This is Footer")
+	            React.createElement("footer", {className: "page-footer"}, 
+	              React.createElement("div", {className: "container"}, 
+	                React.createElement("div", {className: "row"}, 
+	                  React.createElement("div", {className: "col l12 s12 center"}, 
+	                    React.createElement("h5", {className: "white-text"}, "Simon React Practice"), 
+	                    React.createElement("p", {className: "grey-text text-lighten-4"}, "You can use rows and columns here to organize your footer content.")
+	                  )
+	                )
+	              ), 
+	              React.createElement("div", {className: "footer-copyright center"}, 
+	                React.createElement("div", {className: "container"}, 
+	                "© 2014 Copyright Simon Sun"
+	                )
+	              )
+	            )
 	        );
 	    }
 
@@ -20525,11 +20527,20 @@
 
 	var React = __webpack_require__(1);
 
+	var MessageForm = __webpack_require__(161);
+	var Badges = __webpack_require__(162);
+
 	var Container = React.createClass({displayName: "Container",
 
 	    render: function (){
 	        return (
-	            React.createElement("div", {id: "container", className: "container"}
+	            React.createElement("div", {className: "row"}, 
+	                React.createElement("div", {className: "col s3"}, 
+	                    React.createElement(Badges, null)
+	                ), 
+	                React.createElement("div", {className: "col s9"}, 
+	                    React.createElement(MessageForm, null)
+	                )
 	            )
 	        );
 	    }
@@ -20537,6 +20548,58 @@
 	});
 
 	module.exports = Container;
+
+/***/ },
+/* 161 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM *//** @jsx React.DOM */
+
+	var React = __webpack_require__(1);
+
+	var MessageForm = React.createClass({displayName: "MessageForm",
+
+	    render: function (){
+	        return (
+	            React.createElement("div", {className: "row"}, 
+	              React.createElement("form", {className: "col s12"}, 
+	                React.createElement("div", {className: "row"}, 
+	                  React.createElement("div", {className: "input-field col s12"}, 
+	                    React.createElement("input", {id: "email", type: "email", className: "validate"}), 
+	                    React.createElement("label", {for: "email", "data-error": "wrong", "data-success": "right"}, "Email")
+	                  )
+	                )
+	              )
+	            )
+	        );
+	    }
+
+	});
+
+	module.exports = MessageForm;
+
+/***/ },
+/* 162 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM *//** @jsx React.DOM */
+
+	var React = __webpack_require__(1);
+
+	var Badges = React.createClass({displayName: "Badges",
+
+	    render: function (){
+	        return (
+	            React.createElement("div", {className: "collection"}, 
+	              React.createElement("a", {href: "#!", className: "collection-item"}, "Action 1"), 
+	              React.createElement("a", {href: "#!", className: "collection-item"}, "Action 2")
+	            )
+	        );
+	    }
+
+	});
+
+	module.exports = Badges;
 
 /***/ }
 /******/ ]);
