@@ -1,11 +1,21 @@
-/** @jsx React.DOM */
 
 var React = require('react');
 
 var MessageForm = require('./MessageForm.jsx');
 var Badges = require('./Badges.jsx');
 
+import AppStore from '../stores/test';
+
 var Container = React.createClass({
+
+    getInitialState() {
+        return AppStore.getState();
+    },
+
+    onChange(state) {
+        console.log(state)
+        this.setState(state);
+    },
 
     render: function (){
         return (
