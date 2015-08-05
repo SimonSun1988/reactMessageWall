@@ -20596,7 +20596,6 @@
 	            )
 	        );
 	    }
-
 	});
 
 	module.exports = Badges;
