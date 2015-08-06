@@ -20553,28 +20553,24 @@
 
 	'use strict';
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _storesTest = __webpack_require__(161);
-
-	var _storesTest2 = _interopRequireDefault(_storesTest);
-
 	var React = __webpack_require__(1);
 
-	var MessageForm = __webpack_require__(176);
+	var MessageForm = __webpack_require__(161);
 	var Badges = __webpack_require__(177);
+
+	// import AppStore from '../stores/test';
 
 	var Container = React.createClass({
 	    displayName: 'Container',
 
-	    getInitialState: function getInitialState() {
-	        return _storesTest2['default'].getState();
-	    },
+	    // getInitialState() {
+	    //     return AppStore.getState();
+	    // },
 
-	    onChange: function onChange(state) {
-	        console.log(state);
-	        this.setState(state);
-	    },
+	    // onChange(state) {
+	    //     console.log(state)
+	    //     this.setState(state);
+	    // },
 
 	    render: function render() {
 	        return React.createElement(
@@ -20603,34 +20599,70 @@
 
 	'use strict';
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var React = __webpack_require__(1);
+	var AppActions = __webpack_require__(162);
+	var AppStore = __webpack_require__(176);
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var MessageForm = React.createClass({
+	    displayName: 'MessageForm',
 
-	var alt = __webpack_require__(162);
-	var AppActions = __webpack_require__(175);
+	    getInitialState: function getInitialState() {
+	        return AppStore.getState();
+	    },
 
-	var AppStore = (function () {
-	    function AppStore() {
-	        _classCallCheck(this, AppStore);
+	    componentDidMount: function componentDidMount() {
+	        AppStore.listen(this.onChange);
+	    },
 
-	        this.bindListeners({
+	    componentWillUnmount: function componentWillUnmount() {
+	        // 取消事件監聽
+	        AppStore.unlisten(this.onChange);
+	    },
 
-	            handleText: AppActions.GET_TEXT
-	        });
+	    inputChange: function inputChange(event) {
+	        console.log(event.target.value);
+	        var data = event.target.value;
+	        this.setState({ text: data });
+	        // AppActions.getText(data);
+	    },
+
+	    onChange: function onChange(state) {
+	        this.setState(state);
+	    },
+
+	    render: function render() {
+	        return React.createElement(
+	            'div',
+	            { className: 'row' },
+	            React.createElement(
+	                'form',
+	                { className: 'col s12' },
+	                React.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    React.createElement(
+	                        'div',
+	                        { className: 'input-field col s12' },
+	                        React.createElement('input', { id: 'email', type: 'email', className: 'validate', onChange: this.inputChange }),
+	                        React.createElement(
+	                            'label',
+	                            { 'for': 'email', 'data-error': 'wrong', 'data-success': 'right' },
+	                            'Email'
+	                        ),
+	                        React.createElement(
+	                            'h1',
+	                            null,
+	                            this.state.text
+	                        )
+	                    )
+	                )
+	            )
+	        );
 	    }
 
-	    _createClass(AppStore, [{
-	        key: 'handleText',
-	        value: function handleText(doc) {
-	            this.text = doc;
-	        }
-	    }]);
+	});
 
-	    return AppStore;
-	})();
-
-	module.exports = alt.createStore(AppStore, 'AppStore');
+	module.exports = MessageForm;
 
 /***/ },
 /* 162 */
@@ -20638,13 +20670,46 @@
 
 	'use strict';
 
-	var Alt = __webpack_require__(163);
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _alt = __webpack_require__(163);
+
+	var _alt2 = _interopRequireDefault(_alt);
+
+	var AppActions = (function () {
+	    function AppActions() {
+	        _classCallCheck(this, AppActions);
+	    }
+
+	    _createClass(AppActions, [{
+	        key: 'getText',
+	        value: function getText(text) {
+	            this.dispatch(text);
+	        }
+	    }]);
+
+	    return AppActions;
+	})();
+
+	module.exports = _alt2['default'].createActions(AppActions);
+
+/***/ },
+/* 163 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Alt = __webpack_require__(164);
 	var alt = new Alt();
 
 	module.exports = alt;
 
 /***/ },
-/* 163 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*global window*/
@@ -20669,25 +20734,25 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var _flux = __webpack_require__(170);
+	var _flux = __webpack_require__(171);
 
-	var _utilsStateFunctions = __webpack_require__(173);
+	var _utilsStateFunctions = __webpack_require__(174);
 
 	var StateFunctions = _interopRequireWildcard(_utilsStateFunctions);
 
-	var _utilsFunctions = __webpack_require__(166);
+	var _utilsFunctions = __webpack_require__(167);
 
 	var fn = _interopRequireWildcard(_utilsFunctions);
 
-	var _store = __webpack_require__(164);
+	var _store = __webpack_require__(165);
 
 	var store = _interopRequireWildcard(_store);
 
-	var _utilsAltUtils = __webpack_require__(165);
+	var _utilsAltUtils = __webpack_require__(166);
 
 	var utils = _interopRequireWildcard(_utilsAltUtils);
 
-	var _actions = __webpack_require__(174);
+	var _actions = __webpack_require__(175);
 
 	var _actions2 = _interopRequireDefault(_actions);
 
@@ -20968,7 +21033,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 164 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20993,19 +21058,19 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
-	var _utilsAltUtils = __webpack_require__(165);
+	var _utilsAltUtils = __webpack_require__(166);
 
 	var utils = _interopRequireWildcard(_utilsAltUtils);
 
-	var _utilsFunctions = __webpack_require__(166);
+	var _utilsFunctions = __webpack_require__(167);
 
 	var fn = _interopRequireWildcard(_utilsFunctions);
 
-	var _AltStore = __webpack_require__(167);
+	var _AltStore = __webpack_require__(168);
 
 	var _AltStore2 = _interopRequireDefault(_AltStore);
 
-	var _StoreMixin = __webpack_require__(169);
+	var _StoreMixin = __webpack_require__(170);
 
 	var _StoreMixin2 = _interopRequireDefault(_StoreMixin);
 
@@ -21141,7 +21206,7 @@
 	}
 
 /***/ },
-/* 165 */
+/* 166 */
 /***/ function(module, exports) {
 
 	/*eslint-disable*/
@@ -21206,7 +21271,7 @@
 	function NoopClass() {}
 
 /***/ },
-/* 166 */
+/* 167 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21247,7 +21312,7 @@
 	}
 
 /***/ },
-/* 167 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21264,11 +21329,11 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var _utilsFunctions = __webpack_require__(166);
+	var _utilsFunctions = __webpack_require__(167);
 
 	var fn = _interopRequireWildcard(_utilsFunctions);
 
-	var _transmitter = __webpack_require__(168);
+	var _transmitter = __webpack_require__(169);
 
 	var _transmitter2 = _interopRequireDefault(_transmitter);
 
@@ -21383,7 +21448,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 168 */
+/* 169 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -21416,7 +21481,7 @@
 	module.exports = transmitter;
 
 /***/ },
-/* 169 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21429,11 +21494,11 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _transmitter = __webpack_require__(168);
+	var _transmitter = __webpack_require__(169);
 
 	var _transmitter2 = _interopRequireDefault(_transmitter);
 
-	var _utilsFunctions = __webpack_require__(166);
+	var _utilsFunctions = __webpack_require__(167);
 
 	var fn = _interopRequireWildcard(_utilsFunctions);
 
@@ -21622,7 +21687,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 170 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -21634,11 +21699,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 
-	module.exports.Dispatcher = __webpack_require__(171)
+	module.exports.Dispatcher = __webpack_require__(172)
 
 
 /***/ },
-/* 171 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -21655,7 +21720,7 @@
 
 	"use strict";
 
-	var invariant = __webpack_require__(172);
+	var invariant = __webpack_require__(173);
 
 	var _lastID = 1;
 	var _prefix = 'ID_';
@@ -21894,7 +21959,7 @@
 
 
 /***/ },
-/* 172 */
+/* 173 */
 /***/ function(module, exports) {
 
 	/**
@@ -21953,7 +22018,7 @@
 
 
 /***/ },
-/* 173 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21968,7 +22033,7 @@
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
-	var _utilsFunctions = __webpack_require__(166);
+	var _utilsFunctions = __webpack_require__(167);
 
 	var fn = _interopRequireWildcard(_utilsFunctions);
 
@@ -22026,7 +22091,7 @@
 	}
 
 /***/ },
-/* 174 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22043,11 +22108,11 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var _utilsFunctions = __webpack_require__(166);
+	var _utilsFunctions = __webpack_require__(167);
 
 	var fn = _interopRequireWildcard(_utilsFunctions);
 
-	var _utilsAltUtils = __webpack_require__(165);
+	var _utilsAltUtils = __webpack_require__(166);
 
 	var utils = _interopRequireWildcard(_utilsAltUtils);
 
@@ -22123,85 +22188,39 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 175 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// var alt = require('../alt');
-	'use strict';
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	var _alt = __webpack_require__(162);
-
-	var _alt2 = _interopRequireDefault(_alt);
-
-	var AppActions = (function () {
-	    function AppActions() {
-	        _classCallCheck(this, AppActions);
-	    }
-
-	    _createClass(AppActions, [{
-	        key: 'getText',
-
-	        // this.dispatch('errorMessage');
-	        value: function getText(text) {
-	            this.dispatch(text);
-	        }
-	    }]);
-
-	    return AppActions;
-	})();
-
-	module.exports = _alt2['default'].createActions(AppActions);
-
-/***/ },
 /* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var React = __webpack_require__(1);
-	var AppActions = __webpack_require__(175);
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var MessageForm = React.createClass({
-	  displayName: 'MessageForm',
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	  inputChange: function inputChange() {
-	    console.log('aaa');
-	  },
+	var alt = __webpack_require__(163);
+	var AppActions = __webpack_require__(162);
 
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'row' },
-	      React.createElement(
-	        'form',
-	        { className: 'col s12' },
-	        React.createElement(
-	          'div',
-	          { className: 'row' },
-	          React.createElement(
-	            'div',
-	            { className: 'input-field col s12' },
-	            React.createElement('input', { id: 'email', type: 'email', className: 'validate', onChange: this.inputChange }),
-	            React.createElement(
-	              'label',
-	              { 'for': 'email', 'data-error': 'wrong', 'data-success': 'right' },
-	              'Email'
-	            )
-	          )
-	        )
-	      )
-	    );
-	  }
+	var AppStore = (function () {
+	    function AppStore() {
+	        _classCallCheck(this, AppStore);
 
-	});
+	        this.bindListeners({
 
-	module.exports = MessageForm;
+	            handleText: AppActions.GET_TEXT
+	        });
+	    }
+
+	    _createClass(AppStore, [{
+	        key: 'handleText',
+	        value: function handleText(doc) {
+	            this.text = doc;
+	        }
+	    }]);
+
+	    return AppStore;
+	})();
+
+	module.exports = alt.createStore(AppStore, 'AppStore');
 
 /***/ },
 /* 177 */
