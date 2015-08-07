@@ -1,8 +1,9 @@
 
-var React = require('react');
+import React from 'react'
 
-var MessageForm = require('./MessageForm.jsx');
-var Badges = require('./Badges.jsx');
+import MessageForm from './MessageForm.jsx'
+import Badges from './Badges.jsx'
+import Table from './Table.jsx'
 
 // import AppStore from '../stores/test';
 
@@ -25,6 +26,7 @@ var Container = React.createClass({
                 </div>
                 <div className="col s9">
                     <MessageForm />
+                    <Table />
                 </div>
             </div>
         );

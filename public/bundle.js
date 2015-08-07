@@ -20553,14 +20553,27 @@
 
 	'use strict';
 
-	var React = __webpack_require__(1);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var MessageForm = __webpack_require__(161);
-	var Badges = __webpack_require__(177);
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _MessageFormJsx = __webpack_require__(161);
+
+	var _MessageFormJsx2 = _interopRequireDefault(_MessageFormJsx);
+
+	var _BadgesJsx = __webpack_require__(177);
+
+	var _BadgesJsx2 = _interopRequireDefault(_BadgesJsx);
+
+	var _TableJsx = __webpack_require__(178);
+
+	var _TableJsx2 = _interopRequireDefault(_TableJsx);
 
 	// import AppStore from '../stores/test';
 
-	var Container = React.createClass({
+	var Container = _react2['default'].createClass({
 	    displayName: 'Container',
 
 	    // getInitialState() {
@@ -20573,18 +20586,19 @@
 	    // },
 
 	    render: function render() {
-	        return React.createElement(
+	        return _react2['default'].createElement(
 	            'div',
 	            { className: 'row' },
-	            React.createElement(
+	            _react2['default'].createElement(
 	                'div',
 	                { className: 'col s3' },
-	                React.createElement(Badges, null)
+	                _react2['default'].createElement(_BadgesJsx2['default'], null)
 	            ),
-	            React.createElement(
+	            _react2['default'].createElement(
 	                'div',
 	                { className: 'col s9' },
-	                React.createElement(MessageForm, null)
+	                _react2['default'].createElement(_MessageFormJsx2['default'], null),
+	                _react2['default'].createElement(_TableJsx2['default'], null)
 	            )
 	        );
 	    }
@@ -20620,10 +20634,19 @@
 	    },
 
 	    inputChange: function inputChange(event) {
-	        console.log(event.target.value);
+	        // console.log(event.target.value);
 	        var data = event.target.value;
-	        this.setState({ text: data });
-	        // AppActions.getText(data);
+	        // this.setState({text: data});
+	        AppActions.getText(data);
+	    },
+
+	    sendText: function sendText() {
+	        var data = this.state.text;
+	        console.log(data);
+
+	        AppActions.sendMessage(data);
+
+	        this.setState({ text: '' });
 	    },
 
 	    onChange: function onChange(state) {
@@ -20643,19 +20666,28 @@
 	                    React.createElement(
 	                        'div',
 	                        { className: 'input-field col s12' },
-	                        React.createElement('input', { id: 'email', type: 'email', className: 'validate', onChange: this.inputChange }),
+	                        React.createElement('input', { id: 'text', type: 'text', onChange: this.inputChange, value: this.state.text }),
 	                        React.createElement(
 	                            'label',
-	                            { 'for': 'email', 'data-error': 'wrong', 'data-success': 'right' },
-	                            'Email'
-	                        ),
+	                            { 'for': 'text', 'data-error': 'wrong', 'data-success': 'right' },
+	                            'Message'
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        null,
 	                        React.createElement(
-	                            'h1',
+	                            'h3',
 	                            null,
 	                            this.state.text
 	                        )
 	                    )
 	                )
+	            ),
+	            React.createElement(
+	                'a',
+	                { className: 'waves-effect waves-light btn', onClick: this.sendText },
+	                '送出'
 	            )
 	        );
 	    }
@@ -20688,6 +20720,11 @@
 	    _createClass(AppActions, [{
 	        key: 'getText',
 	        value: function getText(text) {
+	            this.dispatch(text);
+	        }
+	    }, {
+	        key: 'sendMessage',
+	        value: function sendMessage(text) {
 	            this.dispatch(text);
 	        }
 	    }]);
@@ -22204,9 +22241,12 @@
 	    function AppStore() {
 	        _classCallCheck(this, AppStore);
 
+	        this.messages = [];
+
 	        this.bindListeners({
 
-	            handleText: AppActions.GET_TEXT
+	            handleText: AppActions.GET_TEXT,
+	            sendMessage: AppActions.SEND_MESSAGE
 	        });
 	    }
 
@@ -22214,6 +22254,16 @@
 	        key: 'handleText',
 	        value: function handleText(doc) {
 	            this.text = doc;
+	        }
+	    }, {
+	        key: 'sendMessage',
+	        value: function sendMessage(doc) {
+
+	            if (!doc || doc === '') {
+	                return this.messages;
+	            }
+
+	            return this.messages.push(doc);
 	        }
 	    }]);
 
@@ -22252,6 +22302,83 @@
 	});
 
 	module.exports = Badges;
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _storesAppStore = __webpack_require__(176);
+
+	var _storesAppStore2 = _interopRequireDefault(_storesAppStore);
+
+	var Table = _react2['default'].createClass({
+	    displayName: 'Table',
+
+	    getInitialState: function getInitialState() {
+	        return _storesAppStore2['default'].getState();
+	    },
+
+	    componentDidMount: function componentDidMount() {
+	        _storesAppStore2['default'].listen(this.onChange);
+	    },
+
+	    componentWillUnmount: function componentWillUnmount() {
+	        // 取消事件監聽
+	        _storesAppStore2['default'].unlisten(this.onChange);
+	    },
+
+	    onChange: function onChange(state) {
+	        this.setState(state);
+	    },
+
+	    render: function render() {
+
+	        var messages = this.state.messages.map(function (message) {
+	            return _react2['default'].createElement(
+	                'tr',
+	                null,
+	                _react2['default'].createElement(
+	                    'td',
+	                    null,
+	                    message
+	                )
+	            );
+	        });
+
+	        return _react2['default'].createElement(
+	            'table',
+	            { className: 'striped' },
+	            _react2['default'].createElement(
+	                'thead',
+	                null,
+	                _react2['default'].createElement(
+	                    'tr',
+	                    null,
+	                    _react2['default'].createElement(
+	                        'th',
+	                        null,
+	                        'Message'
+	                    )
+	                )
+	            ),
+	            _react2['default'].createElement(
+	                'tbody',
+	                null,
+	                messages
+	            )
+	        );
+	    }
+	});
+
+	module.exports = Table;
 
 /***/ }
 /******/ ]);
