@@ -20569,9 +20569,9 @@
 
 	var _TableJsx = __webpack_require__(178);
 
-	var _TableJsx2 = _interopRequireDefault(_TableJsx);
-
 	// import AppStore from '../stores/test';
+
+	var _TableJsx2 = _interopRequireDefault(_TableJsx);
 
 	var Container = _react2['default'].createClass({
 	    displayName: 'Container',
@@ -20624,7 +20624,13 @@
 	        return AppStore.getState();
 	    },
 
+	    componentWillMount: function componentWillMount() {
+	        AppActions.getMessage();
+	    },
+
 	    componentDidMount: function componentDidMount() {
+	        // AppActions.getMessage();
+
 	        AppStore.listen(this.onChange);
 	    },
 
@@ -20726,6 +20732,17 @@
 	        key: 'sendMessage',
 	        value: function sendMessage(text) {
 	            this.dispatch(text);
+	        }
+	    }, {
+	        key: 'getMessage',
+	        value: function getMessage() {
+	            // request('http://127.0.0.1:10021/data', function(data) {
+	            //     return that.dispatch(data);
+	            // });
+	            // $.get('http://127.0.0.1:10021/data', function(data) {
+	            //     return that.dispatch(data);
+	            // });
+	            this.dispatch(['Simon', 'Webber', 'Wayne']);
 	        }
 	    }]);
 
@@ -22241,16 +22258,23 @@
 	    function AppStore() {
 	        _classCallCheck(this, AppStore);
 
+	        console.log(this.messages);
 	        this.messages = [];
 
 	        this.bindListeners({
-
+	            getMessage: AppActions.GET_MESSAGE,
 	            handleText: AppActions.GET_TEXT,
 	            sendMessage: AppActions.SEND_MESSAGE
 	        });
 	    }
 
 	    _createClass(AppStore, [{
+	        key: 'getMessage',
+	        value: function getMessage(data) {
+	            console.log(data);
+	            this.messages = data;
+	        }
+	    }, {
 	        key: 'handleText',
 	        value: function handleText(doc) {
 	            this.text = doc;
@@ -22260,7 +22284,7 @@
 	        value: function sendMessage(doc) {
 
 	            if (!doc || doc === '') {
-	                return this.messages;
+	                return;
 	            }
 
 	            return this.messages.push(doc);

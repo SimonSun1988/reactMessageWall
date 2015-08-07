@@ -9,7 +9,13 @@ var MessageForm = React.createClass({
         return AppStore.getState();
     },
 
+    componentWillMount() {
+        AppActions.getMessage();
+    },
+
     componentDidMount() {
+        // AppActions.getMessage();
+
         AppStore.listen(this.onChange);
     },
 
