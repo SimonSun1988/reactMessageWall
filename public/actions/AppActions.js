@@ -1,5 +1,6 @@
 
 import alt from '../alt';
+import request from 'superagent-bluebird-promise';
 
 class AppActions {
 
@@ -12,13 +13,12 @@ class AppActions {
     }
 
     getMessage() {
-        // request('http://127.0.0.1:10021/data', function(data) {
-        //     return that.dispatch(data);
-        // });
-        // $.get('http://127.0.0.1:10021/data', function(data) {
-        //     return that.dispatch(data);
-        // });
-        this.dispatch(['Simon', 'Webber', 'Wayne']);
+
+        var that = this;
+        request('http://127.0.0.1:10021/data')
+            .then(function(res) {
+                return that.dispatch(res.body);
+            });
     }
 }
 

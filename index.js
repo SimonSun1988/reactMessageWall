@@ -3,6 +3,10 @@ var express = require('express');
 
 var app = express();
 
+var cors = require('cors');
+
+app.use(cors());
+
 app.set('views', './');
 app.set('view engine', 'jade');
 app.use('/', express.static(__dirname + '/public'));
@@ -12,7 +16,7 @@ app.get('/', function (req, res, next){
 });
 
 app.get('/data', function (req, res, next){
-    res.json(['Simon', 'Webber', 'Wayne']);
+    res.jsonp(['Simon', 'Webber', 'Wayne']);
 });
 
 
