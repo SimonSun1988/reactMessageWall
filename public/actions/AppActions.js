@@ -20,6 +20,11 @@ class AppActions {
                 return that.dispatch(res.body);
             });
     }
+
+    getBadges() {
+        var badges = ['tab1','tab2'];
+        this.dispatch(badges);
+    }
 }
 
 module.exports = alt.createActions(AppActions);

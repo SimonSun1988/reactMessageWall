@@ -7,11 +7,13 @@ class AppStore {
 
         console.log(this.messages);
         this.messages = [];
+        this.badges = [];
 
         this.bindListeners({
             getMessage: AppActions.GET_MESSAGE,
             handleText: AppActions.GET_TEXT,
             sendMessage: AppActions.SEND_MESSAGE,
+            getBadges: AppActions.GET_BADGES
         });
     }
 
@@ -31,6 +33,11 @@ class AppStore {
         }
 
         return this.messages.push(doc);
+    }
+
+    getBadges(data) {
+        console.log(data);
+        this.badges = data;
     }
 }
 
