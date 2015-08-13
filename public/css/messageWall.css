@@ -1,7 +1,29 @@
+.Container{
+  margin:0 auto;
+  clear: both;
+}
+.testcol{
+  margin: 0 auto 150px auto;
+  height:auto;
+  display:block;
+  min-height: 100%;
+  width: 100%;
+
+}
+.testcol:after{
+content: '.';
+display: block;
+height: 0;
+clear: both;
+visibility: visible;
+}
 
 footer {
     position:fixed;
-    width:100%;
-    bottom:0px;
-    margin-bottom:0px;
+   left:0px;
+   bottom:0px;
+   height:auto;
+   width:100%;
+   background:#999;
+   clear:both;
 }
