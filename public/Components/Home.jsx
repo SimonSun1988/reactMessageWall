@@ -9,7 +9,7 @@ var Container = require('./Container.jsx');
 var homePage = React.createClass({
     render: function (){
         return (
-            <div className="Container">
+            <div className="Container testcol">
                 <Header />
                 <Container />
                 <Footer />
