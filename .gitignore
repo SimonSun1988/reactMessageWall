@@ -26,5 +26,5 @@ build/Release
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
 
-#Bundlepublic/bundle.j
-public/bundle.js
+#Bundle/public/bundle.js
+bundle.js
