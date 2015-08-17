@@ -10,6 +10,7 @@ app.use(cors());
 app.set('views', './');
 app.set('view engine', 'jade');
 app.use('/', express.static(__dirname + '/public'));
+app.use('/dest/', express.static(__dirname + '/dest'));
 
 app.get('/', function (req, res, next){
     res.render('index');

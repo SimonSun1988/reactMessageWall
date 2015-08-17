@@ -2,7 +2,7 @@ module.exports = {
     entry: './public/boot.jsx',
     output: {
         filename: 'bundle.js',
-        path: __dirname + '/public/' 
+        path: __dirname + '/dest/'
     },
     module: {
         loaders: [
